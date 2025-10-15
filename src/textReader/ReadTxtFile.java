@@ -4,15 +4,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-
 public class ReadTxtFile {
     public ArrayList<String> words = new ArrayList<>();
+    public ArrayList<String> uniqueWords = new ArrayList<>();
+    public ArrayList<Integer> uniqueWordFrequency = new ArrayList<>();
     public int wordCount = 0;
     public int uniqueWordCount = 0;
     public String name;
 
     public ReadTxtFile(String name) {
         words = new ArrayList<>();
+        uniqueWords = new ArrayList<>();
+        uniqueWordFrequency = new ArrayList<>();
         wordCount = 0;
         uniqueWordCount = 0;
         this.name = name;
@@ -29,17 +32,17 @@ public class ReadTxtFile {
                 if(word!=""){
                     words.add(word);
                 }
-
             }
+
             Reader.close();
             StopWordRemover.removeStopWords(words);
             wordCount = wordCounter();
-            uniqueWordCount = uniqueWordCounter();
+            uniqueWordCount = newUniqueWordCounter();
+            rankFrequency();
         }catch (FileNotFoundException e){
             System.out.println("File not found");
             e.printStackTrace();
         }
-
     }
 
     public int wordCounter() {
@@ -54,17 +57,37 @@ public class ReadTxtFile {
         return uniqueWords.size();
     }
 
-    public void wordFrequency(){
-        Map<String, Integer> wordFrequency = new HashMap<>();
-        for(String word: words){
-            if(!(wordFrequency.containsKey(word))){
-                wordFrequency.put(word, 1);
-            }else{
-                wordFrequency.put(word, wordFrequency.get(word)+1);
+    public int newUniqueWordCounter() {
+        for (String word : words) {
+            int index = uniqueWords.indexOf(word); // -1 if it never occurs
+            if (index != -1) { //
+                // If the word exists in uniqueWords, increment the count
+                uniqueWordFrequency.set(index, uniqueWordFrequency.get(index) + 1);
+            } else {
+                // If the word is not found, add it to uniqueWords and set its count to 1
+                uniqueWords.add(word);
+                uniqueWordFrequency.add(1);
             }
         }
-        System.out.println(wordFrequency.size());
-        System.out.println(wordFrequency);
+        return uniqueWords.size();
+    }
+
+    public void rankFrequency(){
+        for (int i = 0; i < uniqueWordFrequency.size() - 1; i++) {
+            for (int j = 0; j < uniqueWordFrequency.size() - i - 1; j++) {
+                if (uniqueWordFrequency.get(j) < uniqueWordFrequency.get(j + 1)) {
+                    // Swaps the frequency of each word
+                    int tempCount = uniqueWordFrequency.get(j);
+                    uniqueWordFrequency.set(j, uniqueWordFrequency.get(j + 1));
+                    uniqueWordFrequency.set(j + 1, tempCount);
+
+                    // Swap corresponding words that match frequency
+                    String tempWord = uniqueWords.get(j);
+                    uniqueWords.set(j, uniqueWords.get(j + 1));
+                    uniqueWords.set(j + 1, tempWord);
+                }
+            }
+        }
     }
 
     public static void printArticle(ReadTxtFile article) {
