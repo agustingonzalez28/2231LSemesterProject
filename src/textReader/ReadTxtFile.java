@@ -95,6 +95,4 @@ public class ReadTxtFile {
             System.out.println(word);
         }
     }
-
-
 }
