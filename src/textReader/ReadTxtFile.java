@@ -2,7 +2,8 @@ package textReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ReadTxtFile {
     public ArrayList<String> words = new ArrayList<>();
@@ -37,7 +38,7 @@ public class ReadTxtFile {
             Reader.close();
             StopWordRemover.removeStopWords(words);
             wordCount = wordCounter();
-            uniqueWordCount = newUniqueWordCounter();
+            uniqueWordCount = UniqueWordCounter();
             rankFrequency();
         }catch (FileNotFoundException e){
             System.out.println("File not found");
@@ -49,15 +50,7 @@ public class ReadTxtFile {
         return words.size();
     }
 
-    public int uniqueWordCounter() {
-        Set<Integer> uniqueWords = new HashSet<>();
-        for (String word : words) {
-            uniqueWords.add(word.hashCode());
-        }
-        return uniqueWords.size();
-    }
-
-    public int newUniqueWordCounter() {
+    public int UniqueWordCounter() {
         for (String word : words) {
             int index = uniqueWords.indexOf(word); // -1 if it never occurs
             if (index != -1) { //
@@ -87,12 +80,6 @@ public class ReadTxtFile {
                     uniqueWords.set(j + 1, tempWord);
                 }
             }
-        }
-    }
-
-    public static void printArticle(ReadTxtFile article) {
-        for(String word : article.words) {
-            System.out.println(word);
         }
     }
 }
