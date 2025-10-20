@@ -1,7 +1,5 @@
 package textReader;
 
-import java.util.*;
-
 public class FileStats {
 
     public static void printData(ReadTxtFile article){
