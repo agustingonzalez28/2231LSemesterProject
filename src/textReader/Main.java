@@ -1,8 +1,15 @@
 package textReader;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+/**
+ * This Class calls and initializes all other classes and methods to process the input articles, calculate their statistics
+ * and compare articles of similar topics.
+ */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         ReadTxtFile article1 = new ReadTxtFile("Article 1");
         article1.ReadFile("src/DataSets/BasketballArticles/Dr.JosephPark.txt");
 
@@ -43,6 +50,35 @@ public class Main {
         FileStats.printData(article8);
         FileStats.printData(article9);
         FileStats.printData(article10);
+
+        ArrayList<ReadTxtFile> basketballArticles=new ArrayList<>();
+        ArticleComparer basketball=new ArticleComparer(basketballArticles);
+        basketball.addRelatedArticles(article1);
+        basketball.addRelatedArticles(article2);
+        basketball.addRelatedArticles(article3);
+        basketball.addRelatedArticles(article4);
+        basketball.rankByLexicon();
+        basketball.rankByRichness();
+
+        ArrayList<ReadTxtFile> baseballArticles=new ArrayList<>();
+        ArticleComparer baseball=new ArticleComparer(baseballArticles);
+        baseball.addRelatedArticles(article5);
+        baseball.addRelatedArticles(article6);
+        baseball.addRelatedArticles(article7);
+        baseball.rankByLexicon();
+        baseball.rankByRichness();
+
+        ArrayList<ReadTxtFile> hiphopArticles=new ArrayList<>();
+        ArticleComparer hiphop=new ArticleComparer(hiphopArticles);
+        hiphop.addRelatedArticles(article8);
+        hiphop.addRelatedArticles(article9);
+        hiphop.addRelatedArticles(article10);
+        hiphop.rankByLexicon();
+        hiphop.rankByRichness();
+
+
+
+
     }
 
 }
