@@ -1,7 +1,7 @@
 # CPSC2231L - Programming Workshop Semester Project
 
 By: Agustin Gonzalez & Obiako Nwakile\
-Last Updated: 10/20/2025
+Last Updated: 12/11/2025
 
 ## Introduction
 
