@@ -16,11 +16,11 @@ This program would work with any articles that are stored in text files. The pro
 - History of Hip-Hop (3 articles)
 - Achilles Tears in Basketball (4 articles)
 
-In addition, there is also a text file with all the stop words that need to be removed from the articles. This file is accessed through the use of a Scanner in the StopWordRemover Class. There are also 3 files, lexicon_scores.txt, negative-words.txt, and positive-words.txt, information used to validate the attitude of the articles.
+In addition, there is also a text file with all the stop words that need to be removed from the articles. This file is accessed through the use of a Scanner in the StopWordRemover Class. There are also 3 files, lexicon_scores.txt, negative-words.txt, and positive-words.txt, information used to validate the attitude of the articles.In this folder you can also find an empty folder called NewArticles where articles added by the user will be stored.
 
 ## textReader Package Information
 
-This is the main package for this program, in its current state. It includes 8 .java files storing java classes. These classes are needed to process the text files, collecting the words and analyzing them. The 8 classes are:
+This is the main package for this program, in its current state. It includes 11 .java files storing java classes. These classes are needed to process the text files, collecting the words and analyzing them. The 11 classes are:
 
 - ReadTxtFile Class
 - FileStats Class
@@ -29,11 +29,14 @@ This is the main package for this program, in its current state. It includes 8 .
 - PositiveWordCounter Class
 - WordAttitudeChecker Class
 - ArticleComparer Class
+- FileMover Class
+- UserInterface Class
+- TopicManager Class
 - Main Class
 
 #### Imported Java Classes:
 
-We imported 9 Java Classes necessary for processing the words from the text file and collecting them for analysis.
+We imported 14 Java Classes necessary for processing the words from the text file and collecting them for analysis.
 
 - java.io.File
 - java.io.FileNotFoundException
@@ -44,6 +47,11 @@ We imported 9 Java Classes necessary for processing the words from the text file
 - java.util.Set
 - java.util.HashSet
 - java.util.Scanner
+- java.util.HashMap
+- java.util.Map
+- java.nio.Files
+- java.nio.Paths
+- java.nio.Path
 
 ### ReadTxtFile Class
 
@@ -144,12 +152,49 @@ uniqueWords and uniqueWordFrequency are parallel ArrayLists with the a word in o
 - `rankByLexicon()` - When called, organizes list based on lexicon score of each article and prints the list.
 - `rankByRichness()` - When called, organizes list based on richness of each article and prints the list.
 
+### FileMover Class
+
+#### Key Features
+
+- Takes a file from a directory input by the user and moves it to the "NewArticles" folder in the "DataSets" folder.
+
+#### Key Methods
+
+- `fileMover(String filePath)` - When called, takes file from specified directory and movies it to "src/DataSets/NewArticles" folder.
+
+### UserInterface Class
+
+#### Key Features
+
+- Prints a user interface in the console for the end user to analyze existing articles and add articles of their own.
+
+#### Key Methods
+
+- `gui()` - When called, populates console with prompts for user to use program.
+
+### TopicManager Class
+
+#### The TopicManager Class has 1 field:
+
+This is the instance variable we used for storing Strings and ArticleComparers in a HashMap
+
+- topicRegistry: public static final HashMap containing Strings and ArticleComparers.
+
+#### Key Features
+
+- Keeps track of all article topics to make finding ArticleComparer objects possible when user inputs a related String.
+
+#### Key Methods
+
+- `registerTopic(String name, ArticleComparer topic)` - When called, takes a String and an ArticleComparer, storing them in topicRegistry so that topics can be accessed through a user input String.
+- `getTopicByName(String name)` - When called, returns the ArticleComparer associated with the input String name.
+
 ### Main Class
 
 #### Key Features
 
-- Objects for each article are created and calls `printData(ReadTxtFile article)` from FileStats Class to print information for each article.
+- Objects for each article are created and calls `gui()` from UserInterface Class to generate user interface in the console so end users can use the program.
 
 ### UML Class Diagram
 
-![UML Class Diagram](/Milestone%202%20UML.png "UML Class Diagram")
+![UML Class Diagram](/Milestone%203%20UML%20Diagram.png "UML Class Diagram")

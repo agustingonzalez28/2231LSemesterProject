@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
+
         ReadTxtFile article1 = new ReadTxtFile("Article 1");
         article1.ReadFile("src/DataSets/BasketballArticles/Dr.JosephPark.txt");
 
@@ -40,16 +41,16 @@ public class Main {
         ReadTxtFile article10 = new ReadTxtFile("Article 10");
         article10.ReadFile("src/DataSets/HipHopArticles/YellowbrickTheEvolutionofHipHopAJourney.txt");
 
-        FileStats.printData(article1);
-        FileStats.printData(article2);
-        FileStats.printData(article3);
-        FileStats.printData(article4);
-        FileStats.printData(article5);
-        FileStats.printData(article6);
-        FileStats.printData(article7);
-        FileStats.printData(article8);
-        FileStats.printData(article9);
-        FileStats.printData(article10);
+//        FileStats.printData(article1);
+//        FileStats.printData(article2);
+//        FileStats.printData(article3);
+//        FileStats.printData(article4);
+//        FileStats.printData(article5);
+//        FileStats.printData(article6);
+//        FileStats.printData(article7);
+//        FileStats.printData(article8);
+//        FileStats.printData(article9);
+//        FileStats.printData(article10);
 
         ArrayList<ReadTxtFile> basketballArticles=new ArrayList<>();
         ArticleComparer basketball=new ArticleComparer(basketballArticles);
@@ -57,27 +58,29 @@ public class Main {
         basketball.addRelatedArticles(article2);
         basketball.addRelatedArticles(article3);
         basketball.addRelatedArticles(article4);
-        basketball.rankByLexicon();
-        basketball.rankByRichness();
+        TopicManager.registerTopic("basketball", basketball);
+//        basketball.rankByLexicon();
+//        basketball.rankByRichness();
 
         ArrayList<ReadTxtFile> baseballArticles=new ArrayList<>();
         ArticleComparer baseball=new ArticleComparer(baseballArticles);
         baseball.addRelatedArticles(article5);
         baseball.addRelatedArticles(article6);
         baseball.addRelatedArticles(article7);
-        baseball.rankByLexicon();
-        baseball.rankByRichness();
+        TopicManager.registerTopic("baseball", baseball);
+//        baseball.rankByLexicon();
+//        baseball.rankByRichness();
 
         ArrayList<ReadTxtFile> hiphopArticles=new ArrayList<>();
         ArticleComparer hiphop=new ArticleComparer(hiphopArticles);
         hiphop.addRelatedArticles(article8);
         hiphop.addRelatedArticles(article9);
         hiphop.addRelatedArticles(article10);
-        hiphop.rankByLexicon();
-        hiphop.rankByRichness();
+        TopicManager.registerTopic("hiphop", hiphop);
+//        hiphop.rankByLexicon();
+//        hiphop.rankByRichness();
 
-
-
+        UserInterface.gui();
 
     }
 
