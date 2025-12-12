@@ -1,4 +1,5 @@
 package textReader;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,11 +12,11 @@ public class UserInterface {
      * This method prints the interface necessary for a user to use the program. Has different options
      * and calls the necessary methods for the program to present those options to the user.
      */
-    public static void gui() {
+    public static void gui() throws FileNotFoundException {
         Scanner kb = new Scanner(System.in);
 
         boolean run = true;
-        while (run == true) {
+        while (run) {
             System.out.println("Welcome to TextReader!");
             System.out.println("Please select an option:");
             System.out.println("1. Search a Topic");
@@ -23,32 +24,40 @@ public class UserInterface {
             System.out.println("3. Add an Article");
             System.out.println("4. Close the TextReader");
             System.out.print("Choose option: ");
-            int option = kb.nextInt();
 
-            if (option == 1) {
-                System.out.println();
-                System.out.println("You selected option " + option);
-                System.out.print("Please enter the topic name: ");
-                String topicName = kb.next();
-                option1(topicName);
-                System.out.println();
-            } else if (option == 2) {
-                System.out.println("You selected option " + option);
-                System.out.print("Please enter the topic name: ");
-                String newTopicName = kb.next();
-                option2(newTopicName);
-                System.out.println();
-            } else if (option == 3) {
-                System.out.println("You selected option " + option);
-                option3();
-                System.out.println();
-            } else if (option == 4) {
-                System.out.println("You selected option " + option);
-                System.out.println("Thank you for using TextReader!");
-                run = false;
-            } else {
-                System.out.println("Please select a valid option!");
+            if(kb.hasNextLine()){
+                int option = kb.nextInt();
+                kb.nextLine();
+
+                if (option == 1) {
+                    System.out.println();
+                    System.out.println("You selected option " + option);
+                    System.out.print("Please enter the topic name: ");
+                    String topicName = kb.nextLine();
+                    option1(topicName);
+                    System.out.println();
+                } else if (option == 2) {
+                    System.out.println("You selected option " + option);
+                    System.out.print("Please enter the topic name: ");
+                    String newTopicName = kb.nextLine();
+                    option2(newTopicName);
+                    System.out.println();
+                } else if (option == 3) {
+                    System.out.println("You selected option " + option);
+                    option3();
+                    System.out.println();
+                } else if (option == 4) {
+                    System.out.println("You selected option " + option);
+                    System.out.println("Thank you for using TextReader!");
+                    run = false;
+                } else {
+                    System.out.println("Please select a valid option!");
+                }
+            }else{
+                String invalidInput = kb.nextLine();
+                System.out.println("Error: Invalid input '" + invalidInput + "'. Please enter a number (1-4).");
             }
+
         }
 
 
@@ -67,9 +76,6 @@ public class UserInterface {
             System.out.println("--- Topic Found: " + topicName.toUpperCase() + " ---");
             foundTopic.rankByLexicon();
             foundTopic.rankByRichness();
-            for (ReadTxtFile topic: foundTopic.relatedArticles){
-                FileStats.printData(topic);
-            }
         } else {
             System.out.println("Error: Topic '" + topicName + "' not found in the system.");
         }
@@ -80,7 +86,7 @@ public class UserInterface {
      *
      * @param newTopicName A String that is the name of a new topic the user would like to add and analyze
      */
-    public static void option2(String newTopicName) {
+    public static void option2(String newTopicName) throws FileNotFoundException {
         ArrayList<ReadTxtFile> newArticles=new ArrayList<>();
         ArticleComparer newTopic=new ArticleComparer( newArticles);
         TopicManager.registerTopic(newTopicName, newTopic);
@@ -101,16 +107,26 @@ public class UserInterface {
             if (choice == 2) {
                 decision = 2;
             } else if (choice == 1) {
-                System.out.print("Please enter article name:");
+                System.out.print("Please enter article name: ");
                 String articleName = kb.nextLine();
                 System.out.println();
-                ReadTxtFile newFile = new ReadTxtFile(articleName);
-                System.out.println("Please enter the file path");
-                String path = kb.nextLine();
-                newFile.ReadFile(path);
-                System.out.println();
-                newTopic.addRelatedArticles(newFile);
-                System.out.println("If file exists, Article added successfully.");
+                try{
+                    ReadTxtFile newFile = new ReadTxtFile(articleName);
+                    System.out.print("Please enter the file path: ");
+                    String path = kb.nextLine();
+                    newFile.ReadFile(path);
+                    System.out.println();
+                    if (newFile.wordCount > 0) {
+                        newTopic.addRelatedArticles(newFile);
+                        System.out.println("Article added successfully.");
+                    } else {
+                        System.out.println("Article NOT added to topic. The file was not found or was empty.");
+                    }
+                }catch (FileNotFoundException e){
+                    System.out.println("Error: Article NOT added to topic. File not found.");
+                }
+
+
             } else {
                 System.out.println("Error! Please choose a valid option!");
             }
@@ -121,7 +137,7 @@ public class UserInterface {
      * This method prints out prompts and scanners for users who chose the third option in the gui() method
      * to add articles to the data set and existing topics.
      */
-    public static void option3() {
+    public static void option3() throws FileNotFoundException {
         Scanner kb = new Scanner(System.in);
         System.out.println("Please select an option:");
         System.out.println("1. Add Article to DataSet");

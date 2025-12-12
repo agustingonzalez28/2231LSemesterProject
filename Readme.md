@@ -5,22 +5,32 @@ Last Updated: 12/11/2025
 
 ## Introduction
 
-This project is program for analyzing articles stored in text files. It includes all the files that are necessary to make the java project work in analyzing the articles stored in .txt files. This program takes the articles, removes the stop words, counts the remaining word count, identifies how many unique words appear in the articles and ranks them based on frequency.<br><br>It has two folders, DataSets and textReader, and all the files in those folders can be accesed from within the code.
+This project is program for analyzing articles stored in text files. It includes all the files that are necessary to 
+make the java project work in analyzing the articles stored in .txt files. This program takes the articles, removes the 
+stop words, counts the remaining word count, identifies how many unique words appear in the articles and ranks them 
+based on frequency.<br><br>It has two folders, DataSets and textReader, and all the files in those folders can be 
+accessed from within the code.\
 Below is descriptions of all the files in our project.
 
 ## Data Set Information
 
-This program would work with any articles that are stored in text files. The program pulls directly from a specific file path input when creating `ReadTxtFile(String name)` objects. The "DataSets" folder in the program is preloaded with 10 articles related to each of the 3 following topics:
+This program would work with any articles that are stored in text files. The program pulls directly from a specific file 
+path input when creating `ReadTxtFile(String name)` objects. The "DataSets" folder in the program is preloaded with 10 
+articles related to each of the 3 following topics:
 
 - Steroids in Baseball (3 articles)
 - History of Hip-Hop (3 articles)
 - Achilles Tears in Basketball (4 articles)
 
-In addition, there is also a text file with all the stop words that need to be removed from the articles. This file is accessed through the use of a Scanner in the StopWordRemover Class. There are also 3 files, lexicon_scores.txt, negative-words.txt, and positive-words.txt, information used to validate the attitude of the articles.In this folder you can also find an empty folder called NewArticles where articles added by the user will be stored.
+In addition, there is also a text file with all the stop words that need to be removed from the articles. This file is 
+accessed through the use of a Scanner in the StopWordRemover Class. There are also 3 files, lexicon_scores.txt, 
+negative-words.txt, and positive-words.txt, information used to validate the attitude of the articles.In this folder you 
+can also find an empty folder called NewArticles where articles added by the user will be stored.
 
 ## textReader Package Information
 
-This is the main package for this program, in its current state. It includes 11 .java files storing java classes. These classes are needed to process the text files, collecting the words and analyzing them. The 11 classes are:
+This is the main package for this program, in its current state. It includes 11 .java files storing java classes. These 
+classes are needed to process the text files, collecting the words and analyzing them. The 11 classes are:
 
 - ReadTxtFile Class
 - FileStats Class
@@ -72,7 +82,8 @@ These are the instance variables we used for storing the information collected f
 - richness: public variable storing an int value
 - name: public variable storing a String value
 
-uniqueWords and uniqueWordFrequency are parallel ArrayLists with the a word in one ArrayList and the amount of times it appears in the corresponding index position of the other list.
+uniqueWords and uniqueWordFrequency are parallel ArrayLists with the a word in one ArrayList and the amount of times it 
+appears in the corresponding index position of the other list.
 
 #### Key Features
 
@@ -81,10 +92,13 @@ uniqueWords and uniqueWordFrequency are parallel ArrayLists with the a word in o
 
 #### Methods
 
-- `ReadFile(String filePath)` - Takes file from a specific file path and converts text into ArrayList, while removing stop words and collecting stats in the process.
+- `ReadFile(String filePath)` - Takes file from a specific file path and converts text into ArrayList, while removing 
+stop words and collecting stats in the process.
 - `wordCounter()` - Returns amount of words in article after
-- `UniqeWordCounter()` - Traverses word ArrayList, and updates uniqueWords and uniqueWordFrequency ArrayLists, updating them with each word and how many times each word appears respectively. Returns how many unique words there are.
-- `rankFrequency()` - Traverses uniqueWords and uniqueWordFrequency rearranging ArrayList based on descending order of word usage.
+- `UniqeWordCounter()` - Traverses word ArrayList, and updates uniqueWords and uniqueWordFrequency ArrayLists, updating 
+them with each word and how many times each word appears respectively. Returns how many unique words there are.
+- `rankFrequency()` - Traverses uniqueWords and uniqueWordFrequency rearranging ArrayList based on descending order of 
+word usage.
 
 ### FileStats Class
 
@@ -94,7 +108,8 @@ uniqueWords and uniqueWordFrequency are parallel ArrayLists with the a word in o
 
 #### Key Methods
 
-- `printData(ReadTxtFile article)` - Prints with context, object name, word count, number of unique words, and the 5 most used words in the article.
+- `printData(ReadTxtFile article)` - Prints with context, object name, word count, number of unique words, and the 5 
+most used words in the article.
 
 ### StopWordRemover Class
 
@@ -105,7 +120,8 @@ uniqueWords and uniqueWordFrequency are parallel ArrayLists with the a word in o
 
 #### Key Methods
 
-- `removeStopWords(ArrayList<String> words)` - When called creates a HashSet and removes every word in that HashSet from an ArrayList of Strings.
+- `removeStopWords(ArrayList<String> words)` - When called creates a HashSet and removes every word in that HashSet from 
+an ArrayList of Strings.
 
 ### NegativeWordCounter Class
 
@@ -116,7 +132,8 @@ uniqueWords and uniqueWordFrequency are parallel ArrayLists with the a word in o
 
 #### Key Methods
 
-- `negativeWordCheck(ArrayList<String> words)` - When called creates an ArrayList and compares it to words, returning a count of how many times they appear in words.
+- `negativeWordCheck(ArrayList<String> words)` - When called creates an ArrayList and compares it to words, returning a 
+count of how many times they appear in words.
 
 ### PositiveWordCounter Class
 
@@ -127,18 +144,21 @@ uniqueWords and uniqueWordFrequency are parallel ArrayLists with the a word in o
 
 #### Key Methods
 
-- `positiveWordCheck(ArrayList<String> words)` - When called creates an ArrayList and compares it to words, returning a count of how many times they appear in words.
+- `positiveWordCheck(ArrayList<String> words)` - When called creates an ArrayList and compares it to words, returning a 
+count of how many times they appear in words.
 
 ### WordAttitudeChecker Class
 
 #### Key Features
 
-- Reads a text file containing words and their lexicon score and makes parallel ArrayLists, skipping over words without a score.
+- Reads a text file containing words and their lexicon score and makes parallel ArrayLists, skipping over words without 
+a score.
 - Compares parallel ArrayLists with ArrayList containing article words and calculates an attitude score.
 
 #### Key Methods
 
-- `AttitudeCalculator(ArrayList<String> words)` - When called creates two ArrayLists and compares them to words, returning a sum that represents article's lexicon sxore
+- `AttitudeCalculator(ArrayList<String> words)` - When called creates two ArrayLists and compares them to words, 
+returning a sum that represents article's lexicon score
 
 ### ArticleComparer Class
 
@@ -160,7 +180,8 @@ uniqueWords and uniqueWordFrequency are parallel ArrayLists with the a word in o
 
 #### Key Methods
 
-- `fileMover(String filePath)` - When called, takes file from specified directory and movies it to "src/DataSets/NewArticles" folder.
+- `fileMover(String filePath)` - When called, takes file from specified directory and movies it to
+"src/DataSets/NewArticles" folder.
 
 ### UserInterface Class
 
@@ -186,15 +207,42 @@ This is the instance variable we used for storing Strings and ArticleComparers i
 
 #### Key Methods
 
-- `registerTopic(String name, ArticleComparer topic)` - When called, takes a String and an ArticleComparer, storing them in topicRegistry so that topics can be accessed through a user input String.
+- `registerTopic(String name, ArticleComparer topic)` - When called, takes a String and an ArticleComparer, storing them 
+in topicRegistry so that topics can be accessed through a user input String.
 - `getTopicByName(String name)` - When called, returns the ArticleComparer associated with the input String name.
 
 ### Main Class
 
 #### Key Features
 
-- Objects for each article are created and calls `gui()` from UserInterface Class to generate user interface in the console so end users can use the program.
+- Objects for each article are created and calls `gui()` from UserInterface Class to generate user interface in the 
+console so end users can use the program.
 
 ### UML Class Diagram
 
 ![UML Class Diagram](/Milestone%203%20UML%20Diagram.png "UML Class Diagram")
+
+### Testing Results
+
+![Milestone 3 Testing Results](/Milestone%203%20Interface%20Testing.png "UML Class Diagram")
+
+### Project Discussion
+Our code has many different classes that helped us reach the goal of crating a text analyzer.
+We created many classes that helped us reach this goal. It was very helpful to have many distinct
+classes because it made it very clear to us where each method we needed was and what was necessary
+to improve or adjust when needed. The classes themselves are very cohesive in that for the most part
+the classes each serve a major purpose and do different version of a task. In terms of 
+coupling, a lot of the classes depend on each other because of the hyperfocus of each task so once 
+a task is completed it is then used by the next method until the overall larger task is complete. The ReadTxtFile class
+is dependent on the StopWordRemover, WordAttitudeChecker, PositiveWordCounter, and NegativeWordCounter classes. 
+The FileStats, ArticleComparer, and UserInterface classes are all dependent on ReadTxtFile as that is where the processed
+values are assigned to variables that can be used. For this reason we believe our project could benefit from 
+refactoring. FileStats and UserInterface, both have methods that give the user information regarding the analyzed texts. 
+Importantly, the data printed by FileStats is distinct from UserInterface because of the different features needed for 
+the different milestones. Some type of consolidation would be helpful in clarifying code when maintenance is necessary. 
+In addition, StopWordRemover class has a method that can be added to the ReadTxtFile class because that is the only 
+place it is used. PositiveWordCounter and NegativeWordCounter can be consolidated into a new class called WordCounter. 
+Lastly, the TopicManager class has a variable and methods that can be included in ArticleComparer because it only makes 
+references to this class and would be clearer if combined. These changes would help improve cohesion and coupling, and 
+overall it would help create clarity as the program would have fewer classes to navigate when running, but also while 
+maintaining.

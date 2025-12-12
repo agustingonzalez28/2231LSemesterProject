@@ -93,32 +93,27 @@ public class ReadTxtFile {
      * @see NegativeWordCounter Has method that counts the number of negative words in article.
      * @see PositiveWordCounter Has method that counts the number of positive words in article.
      */
-    public void ReadFile(String filePath) {
-        try{
-            File obj = new File(filePath);
-            Scanner Reader = new Scanner(obj);
-            while(Reader.hasNext()){
-                String word = Reader.next();
-                word=word.strip().toLowerCase();
-                word=word.replaceAll("[^a-zA-Z0-9]", "");
-                if(word!=""){
-                    words.add(word);
-                }
+    public void ReadFile(String filePath) throws FileNotFoundException{
+        File obj = new File(filePath);
+        Scanner Reader = new Scanner(obj);
+        while(Reader.hasNext()){
+            String word = Reader.next();
+            word=word.strip().toLowerCase();
+            word=word.replaceAll("[^a-zA-Z0-9]", "");
+            if(word!=""){
+                words.add(word);
             }
-
-            Reader.close();
-            StopWordRemover.removeStopWords(words);
-            wordCount = wordCounter();
-            uniqueWordCount = UniqueWordCounter();
-            richness=(int)(((double)(uniqueWordCount)/wordCount)*100);
-            rankFrequency();
-            negativeWordCount=NegativeWordCounter.negativeWordCheck(words);
-            positiveWordCount=PositiveWordCounter.positiveWordCheck(words);
-            attitudeScore=WordAttitudeChecker.AttitudeCalculator(words);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
         }
+
+        Reader.close();
+        StopWordRemover.removeStopWords(words);
+        wordCount = wordCounter();
+        uniqueWordCount = UniqueWordCounter();
+        richness=(int)(((double)(uniqueWordCount)/wordCount)*100);
+        rankFrequency();
+        negativeWordCount=NegativeWordCounter.negativeWordCheck(words);
+        positiveWordCount=PositiveWordCounter.positiveWordCheck(words);
+        attitudeScore=WordAttitudeChecker.AttitudeCalculator(words);
     }
 
     /**
